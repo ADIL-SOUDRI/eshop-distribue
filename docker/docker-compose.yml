@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+
+  global:
+    image: gvenzl/oracle-xe:21-slim
+    container_name: eshop_global_db
+    ports:
+      - "1527:1521"
+    environment:
+      ORACLE_PASSWORD: oracle
+    volumes:
+      - global_data:/opt/oracle/oradata
+
+  site1:
+    image: gvenzl/oracle-xe:21-slim
+    container_name: eshop_site1_db
+    ports:
+      - "1528:1521"
+    environment:
+      ORACLE_PASSWORD: oracle
+    volumes:
+      - site1_data:/opt/oracle/oradata
+
+  site2:
+    image: gvenzl/oracle-xe:21-slim
+    container_name: eshop_site2_db
+    ports:
+      - "1529:1521"
+    environment:
+      ORACLE_PASSWORD: oracle
+    volumes:
+      - site2_data:/opt/oracle/oradata
+
+volumes:
+  global_data:
+  site1_data:
+  site2_data:

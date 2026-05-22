@@ -1,0 +1,219 @@
+========================================================
+        ESHOP DISTRIBUE - GUIDE D’EXECUTION
+========================================================
+
+Projet :
+Bases de données distribuées
+Fragmentation - Triggers - Procédures - Optimisation
+
+========================================================
+1. DEMARRAGE DU PROJET
+========================================================
+
+Ouvrir SQL Developer.
+
+Créer / vérifier les connexions :
+
+- SITE_GLOBAL
+- SITE1
+- SITE2
+
+========================================================
+2. EXECUTION DU PROJET (ORDRE IMPORTANT)
+========================================================
+
+--------------------------------------------------------
+ETAPE 1 : CREATION DE LA BASE GLOBALE
+--------------------------------------------------------
+
+Exécuter :
+
+site_global/db_setup.sql
+
+Mode :
+Run Script (F5)
+
+Rôle :
+- création des tables globales :
+  Clients
+  Produits
+  Commandes
+  LigneCommandes
+
+--------------------------------------------------------
+ETAPE 2 : CONTRAINTES
+--------------------------------------------------------
+
+Exécuter :
+
+site_global/constraints.sql
+
+Rôle :
+- PRIMARY KEY
+- FOREIGN KEY
+- intégrité référentielle
+
+--------------------------------------------------------
+ETAPE 3 : FRAGMENTATION
+--------------------------------------------------------
+
+SITE1 :
+
+site1/01_fragment_site1.sql
+
+SITE2 :
+
+site2/01_fragment_site2.sql
+
+Rôle :
+- création fragments :
+  Produits1
+  Clients1
+  Commandes1
+  LigneCommandes1
+
+  Produits2
+  Clients2
+  Commandes2
+  LigneCommandes2
+
+--------------------------------------------------------
+ETAPE 4 : TEST DES FRAGMENTS
+--------------------------------------------------------
+
+Exécuter :
+
+SELECT * FROM Produits1;
+SELECT * FROM Produits2;
+
+========================================================
+3. DB LINKS
+========================================================
+
+Exécuter :
+
+db_links/site1_link.sql
+db_links/site2_link.sql
+
+Test :
+
+SELECT 1 FROM dual@site1;
+SELECT 1 FROM dual@site2;
+
+Résultat attendu :
+1
+
+========================================================
+4. PROCEDURES STOCKEES
+========================================================
+
+Exécuter :
+
+site1/03_procedures_site1.sql
+site2/03_procedures_site2.sql
+
+Procédures :
+- insertligne
+- updateligne
+- deleteligne
+
+========================================================
+5. TRIGGERS
+========================================================
+
+Exécuter :
+
+triggers/trg_insert_ligne.sql
+triggers/trg_update_ligne.sql
+triggers/trg_delete_ligne.sql
+
+Rôle :
+- synchronisation automatique
+- distribution des données
+
+========================================================
+6. TEST DES TRIGGERS
+========================================================
+
+--------------------------------------------------------
+TEST INSERT
+--------------------------------------------------------
+
+INSERT INTO LigneCommandes
+VALUES (1001,101,1001,120,10);
+
+INSERT INTO LigneCommandes
+VALUES (2001,300,2002,80,5);
+
+Vérification :
+
+SITE1 :
+SELECT * FROM LigneCommandes1;
+
+SITE2 :
+SELECT * FROM LigneCommandes2;
+
+--------------------------------------------------------
+TEST UPDATE
+--------------------------------------------------------
+
+UPDATE LigneCommandes
+SET quantite = 150
+WHERE idlignecommande = 1001;
+
+Vérification :
+
+SELECT * FROM LigneCommandes1;
+SELECT * FROM LigneCommandes2;
+
+--------------------------------------------------------
+TEST DELETE
+--------------------------------------------------------
+
+DELETE FROM LigneCommandes
+WHERE idlignecommande = 1001;
+
+Vérification :
+
+SELECT * FROM LigneCommandes1;
+SELECT * FROM LigneCommandes2;
+
+========================================================
+7. REQUETES GLOBALES
+========================================================
+
+Exécuter :
+
+global_queries/q1_commandes_par_client.sql
+global_queries/q2_ca_client.sql
+global_queries/q3_ca_par_categorie.sql
+
+========================================================
+8. OPTIMISATION
+========================================================
+
+Exécuter :
+
+optimization/explain_plan.sql
+optimization/indexes.sql
+
+Rôle :
+- analyse performance SQL
+- création indexes
+- optimisation requêtes
+
+========================================================
+9. RESULTAT FINAL ATTENDU
+========================================================
+
+Le projet doit permettre :
+
+- fragmentation horizontale
+- communication distribuée
+- synchronisation via triggers
+- exécution des requêtes globales
+- optimisation via index
+
+========================================================
+FIN
+========================================================

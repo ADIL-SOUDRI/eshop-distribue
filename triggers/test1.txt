@@ -1,0 +1,284 @@
+========================================================
+        ESHOP DISTRIBUE - GUIDE D’EXECUTION
+========================================================
+
+Projet :
+Bases de données distribuées
+Fragmentation - Triggers - Procédures - Optimisation
+
+========================================================
+1. DEMARRAGE DU PROJET
+========================================================
+
+Ouvrir SQL Developer.
+
+Créer / vérifier les connexions :
+
+- SITE_GLOBAL :"Nom connexion : NEWPROJECT | Utilisateur : system | Mot de passe : oracle | Hostname : localhost | Port : 1521 | Service Name : XEPDB1"
+- SITE1 :"Nom connexion : SITE1 | Utilisateur : system | Mot de passe : oracle | Hostname : localhost | Port : 1521 | Service Name : XEPDB1"
+- SITE2 Nom connexion : SITE2 | Utilisateur : system | Mot de passe : oracle | Hostname : localhost | Port : 1522 | Service Name : XEPDB1
+
+========================================================
+2. CREATION DE LA BASE GLOBALE
+========================================================
+
+Exécuter dans SITE_GLOBAL :
+
+site_global/db_setup.sql
+
+
+--------------------------------------------------------
+TEST TABLES GLOBALES
+--------------------------------------------------------
+
+SELECT * FROM Clients;
+SELECT * FROM Produits;
+SELECT * FROM Commandes;
+SELECT * FROM LigneCommandes;
+
+========================================================
+3. CONTRAINTES
+========================================================
+
+Exécuter :
+
+site_global/constraints.sql
+
+--------------------------------------------------------
+TEST CONTRAINTES
+--------------------------------------------------------
+
+SELECT constraint_name, table_name
+FROM user_constraints;
+
+========================================================
+4. FRAGMENTATION
+========================================================
+
+--------------------------------------------------------
+SITE1
+--------------------------------------------------------
+
+Exécuter :
+
+site1/01_fragment_site1.sql
+
+TEST :
+
+SELECT * FROM Produits1;
+SELECT * FROM Clients1;
+SELECT * FROM Commandes1;
+SELECT * FROM LigneCommandes1;
+
+--------------------------------------------------------
+SITE2
+--------------------------------------------------------
+
+Exécuter :
+
+site2/01_fragment_site2.sql
+
+TEST :
+
+SELECT * FROM Produits2;
+SELECT * FROM Clients2;
+SELECT * FROM Commandes2;
+SELECT * FROM LigneCommandes2;
+
+========================================================
+5. DB LINKS
+========================================================
+
+--------------------------------------------------------
+CREATION DES DB LINKS
+--------------------------------------------------------
+
+Exécuter :
+
+db_links/site1_link.sql
+db_links/site2_link.sql
+
+--------------------------------------------------------
+TEST DB LINKS
+--------------------------------------------------------
+
+Depuis SITE_GLOBAL :
+
+SELECT 1 FROM dual@site1;
+SELECT 1 FROM dual@site2;
+
+--------------------------------------------------------
+ SITE1 -> SITE2
+--------------------------------------------------------
+
+Exécuter :
+
+db_links/site1_to_site2.sql
+
+Puis dans SITE1 :
+
+SELECT * FROM LigneCommandes2@site2;
+
+--------------------------------------------------------
+SITE2 -> SITE1
+--------------------------------------------------------
+
+Exécuter :
+
+db_links/site2_to_site1.sql
+
+Puis dans SITE2 :
+
+SELECT * FROM LigneCommandes1@site1;
+
+========================================================
+6. PROCEDURES STOCKEES
+========================================================
+
+--------------------------------------------------------
+SITE1
+--------------------------------------------------------
+
+Exécuter :
+
+site1/03_procedures_site1.sql
+
+
+--------------------------------------------------------
+SITE2
+--------------------------------------------------------
+
+Exécuter :
+
+site2/03_procedures_site2.sql
+
+
+========================================================
+7. TRIGGERS
+========================================================
+
+Exécuter :
+
+triggers/trg_insert_ligne.sql
+triggers/trg_update_ligne.sql
+triggers/trg_delete_ligne.sql
+
+--------------------------------------------------------
+TEST TRIGGER INSERT
+--------------------------------------------------------
+
+Dans SITE_GLOBAL :
+
+INSERT INTO LigneCommandes
+VALUES (1001,101,1001,120,10);
+
+INSERT INTO LigneCommandes
+VALUES (2001,300,2002,80,5);
+
+TEST :
+
+SITE1 :
+SELECT * FROM LigneCommandes1;
+
+SITE2 :
+SELECT * FROM LigneCommandes2;
+
+--------------------------------------------------------
+TEST TRIGGER UPDATE
+--------------------------------------------------------
+
+UPDATE LigneCommandes
+SET quantite = 150,
+    remise = 20
+WHERE idlignecommande = 1001;
+
+TEST :
+
+SELECT * FROM LigneCommandes1;
+SELECT * FROM LigneCommandes2;
+
+--------------------------------------------------------
+TEST TRIGGER DELETE
+--------------------------------------------------------
+
+DELETE FROM LigneCommandes
+WHERE idlignecommande = 1001;
+
+TEST :
+
+SELECT * FROM LigneCommandes1;
+SELECT * FROM LigneCommandes2;
+
+========================================================
+8. REQUETES GLOBALES
+========================================================
+
+--------------------------------------------------------
+Q1 : NOMBRE DE COMMANDES PAR CLIENT
+--------------------------------------------------------
+
+Exécuter :
+
+global_queries/q1_commandes_par_client.sql
+
+--------------------------------------------------------
+Q2 : CHIFFRE D’AFFAIRES CLIENT
+--------------------------------------------------------
+
+Exécuter :
+
+global_queries/q2_ca_client.sql
+
+--------------------------------------------------------
+Q3 : CHIFFRE D’AFFAIRES PAR CATEGORIE
+--------------------------------------------------------
+
+Exécuter :
+
+global_queries/q3_ca_par_categorie.sql
+
+========================================================
+9. OPTIMISATION
+========================================================
+
+--------------------------------------------------------
+EXPLAIN PLAN
+--------------------------------------------------------
+
+Exécuter :
+
+optimization/explain_plan.sql
+
+--------------------------------------------------------
+INDEXES
+--------------------------------------------------------
+
+Exécuter :
+
+optimization/indexes.sql
+
+--------------------------------------------------------
+TEST OPTIMISATION
+--------------------------------------------------------
+
+EXPLAIN PLAN FOR
+SELECT * FROM Commandes
+WHERE idclient = 1;
+
+SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
+
+========================================================
+10. RESULTAT FINAL ATTENDU
+========================================================
+
+Le projet doit permettre :
+
+- fragmentation horizontale
+- communication distribuée
+- synchronisation automatique
+- requêtes globales
+- optimisation SQL
+
+========================================================
+FIN
+========================================================

@@ -1,9 +1,9 @@
 test.txt 
-inset_test.sql
-test_trg_site1.sql
-test_trg_site2.sql
-db_links.sql
-db_setup.sql
-link_global.sql
-site1_to_site2.sql
-site2_to_site1.sql
+triggers/inset_test.sql
+triggers/test_trg_site1.sql
+triggers/test_trg_site2.sql
+site_global/db_links.sql
+site_global/db_setup.sql
+db_links/link_global.sql
+db_links/site1_to_site2.sql
+db_links/site2_to_site1.sql

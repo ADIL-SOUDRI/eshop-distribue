@@ -48,6 +48,19 @@ INSERT INTO LigneCommandes VALUES (7, 21, 3002, 120, 5);
 INSERT INTO LigneCommandes VALUES (8, 22, 4001, 25, 0);
 INSERT INTO LigneCommandes VALUES (9, 23, 4002, 40, 3);
 INSERT INTO LigneCommandes VALUES (10, 21, 4003, 60, 2);
+
+INSERT INTO LigneCommandes VALUES (11, 10, 1001, 150, 2);
+INSERT INTO LigneCommandes VALUES (12, 11, 1002, 100, 5);
+INSERT INTO LigneCommandes VALUES (13, 12, 3001, 150, 8);
+INSERT INTO LigneCommandes VALUES (14, 13, 3002, 154, 3);
+INSERT INTO LigneCommandes VALUES (15, 10, 3001, 145, 4);
+
+INSERT INTO LigneCommandes VALUES (16, 20, 2001, 60, 1);
+INSERT INTO LigneCommandes VALUES (17, 21, 2002, 70, 0);
+INSERT INTO LigneCommandes VALUES (18, 22, 2003, 80, 2);
+INSERT INTO LigneCommandes VALUES (19, 23, 4001, 90, 1);
+INSERT INTO LigneCommandes VALUES (20, 20, 4002, 85, 0);
+
 SELECT * FROM LigneCommandes1@SITE1_LINK;
 SELECT * FROM LigneCommandes2@SITE2_LINK;
 

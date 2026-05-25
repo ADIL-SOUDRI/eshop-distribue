@@ -1,7 +1,7 @@
 -- =========================
 -- SITE 2 : INSERT DATA TEST
 -- =========================
-
+SELECT object_name FROM user_objects WHERE object_type='PROCEDURE';
 -- CLIENTS2
 INSERT INTO Clients2 VALUES (3, 'C003', 'Client C');
 INSERT INTO Clients2 VALUES (4, 'C004', 'Client D');

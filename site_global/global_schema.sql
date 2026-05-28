@@ -36,9 +36,6 @@ CREATE TABLE LigneCommandes (
 -- SELECT * FROM dual@SITE1_LINK;
 -- SELECT table_name FROM user_tables;
 -- SELECT * FROM dual@SITE_GLOBAL;
-
--- SELECT db_link, username, host
--- FROM user_db_links;
 -- CREATE DATABASE LINK SITE_GLOBAL
 -- CONNECT TO system IDENTIFIED BY oracle
 -- USING '//localhost:1521/XEPDB1';

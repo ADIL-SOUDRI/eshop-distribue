@@ -2,7 +2,7 @@ test.txt
 triggers/inset_test.sql
 triggers/test_trg_site1.sql
 triggers/test_trg_site2.sql
-site_global/db_links.sql
+# site_global/db_links.sql
 site_global/db_setup.sql
 db_links/link_global.sql
 db_links/site1_to_site2.sql

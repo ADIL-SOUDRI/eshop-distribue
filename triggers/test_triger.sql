@@ -2,35 +2,51 @@
    TEST DES TRIGGERS - ESHOP DISTRIBUÉ
    Objectif : tester INSERT / UPDATE / DELETE + distribution
    ========================================================= */
+-- desativer tous les triggers d'abord
 
+ALTER TRIGGER  SYC_INSERT_LIGNE DISABLE;
+ALTER TRIGGER SYC_UPDATE_LIGNE DISABLE;
+ALTER TRIGGER SYC_DELETE_LIGNE DISABLE;
+-- Activer tous les triggers d'abord
+
+ALTER TRIGGER SYC_INSERT_LIGNE ENABLE;
+ALTER TRIGGER SYC_UPDATE_LIGNE ENABLE;
+ALTER TRIGGER SYC_DELETE_LIGNE ENABLE;
 -- =========================================================
 -- 1. TEST INSERT TRIGGER (SYC_INSERT_LIGNE)
 -- =========================================================
 -- Insère une ligne dans la table globale
 -- Le trigger doit envoyer automatiquement vers Site1 ou Site2
 -- selon la catégorie et la quantité
+CREATE TABLE LigneCommandes (
+    idlignecommande NUMBER PRIMARY KEY,
+    idcommande NUMBER,
+    idproduit NUMBER,
+    quantite NUMBER,
+    remise NUMBER
+);
 
-INSERT INTO LigneCommandes VALUES (1, 10, 1001, 120, 5);
+INSERT INTO LigneCommandes VALUES (1, 1, 1001, 120, 5);
 -- Produit 1001 (catégorie 50) => SITE1 (quantite >= 100)
 
-INSERT INTO LigneCommandes VALUES (2, 11, 2001, 50, 2);
+INSERT INTO LigneCommandes VALUES (22, 2, 2001, 50, 2);
 -- Produit 2001 (catégorie 35) => SITE2 (quantite < 100)
 
-INSERT INTO LigneCommandes VALUES (3, 12, 3001, 200, 10);
+INSERT INTO LigneCommandes VALUES (23, 3, 3001, 200, 10);
 -- Produit 3001 (catégorie 50) => SITE1
 
 
-INSERT INTO LigneCommandes VALUES (11, 10, 1001, 150, 2);
-INSERT INTO LigneCommandes VALUES (12, 11, 1002, 100, 5);
-INSERT INTO LigneCommandes VALUES (13, 12, 3001, 150, 8);
-INSERT INTO LigneCommandes VALUES (14, 13, 3002, 154, 3);
-INSERT INTO LigneCommandes VALUES (15, 10, 3001, 145, 4);
+INSERT INTO LigneCommandes VALUES (24, 1, 1001, 150, 2);
+INSERT INTO LigneCommandes VALUES (25, 2, 1002, 100, 5);
+INSERT INTO LigneCommandes VALUES (26, 3, 3001, 150, 8);
+INSERT INTO LigneCommandes VALUES (27, 4, 3002, 154, 3);
+INSERT INTO LigneCommandes VALUES (28, 1, 3001, 145, 4);
 
-INSERT INTO LigneCommandes VALUES (16, 20, 2001, 60, 1);
-INSERT INTO LigneCommandes VALUES (17, 21, 2002, 70, 0);
-INSERT INTO LigneCommandes VALUES (18, 22, 2003, 80, 2);
-INSERT INTO LigneCommandes VALUES (19, 23, 4001, 90, 1);
-INSERT INTO LigneCommandes VALUES (20, 20, 4002, 85, 0);
+INSERT INTO LigneCommandes VALUES (29, 5, 2001, 60, 1);
+INSERT INTO LigneCommandes VALUES (30, 6, 2002, 70, 0);
+INSERT INTO LigneCommandes VALUES (31, 7, 2003, 80, 2);
+INSERT INTO LigneCommandes VALUES (32, 8, 4001, 90, 1);
+INSERT INTO LigneCommandes VALUES (33, 5, 4002, 85, 0);
 
 COMMIT;
 

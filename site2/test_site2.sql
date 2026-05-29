@@ -47,10 +47,34 @@ WHERE idlignecommande = 4;
 -- DELETE TEST
 -- =========================
 
-DELETE FROM LigneCommandes2
-WHERE idlignecommande = 5;
+SELECT* FROM LigneCommandes2
+WHERE idlignecommande = 24;
 
 SELECT * FROM LigneCommandes2;
+BEGIN
+
+    DELETE FROM LigneCommandes2;
+    DELETE FROM Commandes2;
+    DELETE FROM Produits2;
+    DELETE FROM Clients2;
+
+    COMMIT;
+
+    DBMS_OUTPUT.PUT_LINE(
+        'Toutes les données ont été supprimées.'
+    );
+
+EXCEPTION
+    WHEN OTHERS THEN
+
+        ROLLBACK;
+
+        DBMS_OUTPUT.PUT_LINE(
+            'Erreur : ' || SQLERRM
+        );
+
+END;
+/
 
 -- INSERT INTO LigneCommandes2 VALUES (2, 102, 2001, 60, 5);
 

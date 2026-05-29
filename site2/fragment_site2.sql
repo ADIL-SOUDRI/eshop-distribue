@@ -13,7 +13,7 @@ WHERE idcateg = 35;
 CREATE TABLE LigneCommandes2 AS
 SELECT *
 FROM LigneCommandes@SITE_GLOBAL
-WHERE quantite > 50
+WHERE quantite < 100
 AND idproduit IN (
     SELECT idproduit
     FROM Produits2
@@ -31,40 +31,6 @@ SELECT DISTINCT cl.*
 FROM Clients@SITE_GLOBAL cl
 JOIN Commandes2 c
 ON cl.idclient = c.idclient;
-
--- =========================================
--- FRAGMENTATION SITE 2 (VERSION DISTANTE VIA DATABASE LINK)
--- =========================================
-
--- Produits2 récupérés depuis SITE1 via database link
-CREATE TABLE Produits2 AS
-SELECT * FROM Produits@site1
-WHERE idcateg = 35;
-
-
--- LigneCommandes2 depuis SITE1
-CREATE TABLE LigneCommandes2 AS
-SELECT *
-FROM LigneCommandes@site1
-WHERE quantite > 50
-AND idproduit IN (SELECT idproduit FROM Produits2);
-
-
--- Commandes2 depuis SITE1
-CREATE TABLE Commandes2 AS
-SELECT DISTINCT c.*
-FROM Commandes@site1 c
-JOIN LigneCommandes2 l
-ON c.idcommande = l.idcommande;
-
-
--- Clients2 depuis SITE1
-CREATE TABLE Clients2 AS
-SELECT DISTINCT cl.*
-FROM Clients@site1 cl
-JOIN Commandes2 c
-ON cl.idclient = c.idclient;
-
 
 -- =========================================
 -- VERIFICATION DES TABLES
@@ -99,6 +65,42 @@ WHERE idcateg = 35;
 
 SELECT * FROM Produits2;
 SELECT * FROM LigneCommandes2;
+
+-- -- =========================================
+-- -- FRAGMENTATION SITE 2 (VERSION DISTANTE VIA DATABASE LINK)
+-- -- =========================================
+
+-- -- Produits2 récupérés depuis SITE1 via database link
+-- CREATE TABLE Produits2 AS
+-- SELECT * FROM Produits@site1
+-- WHERE idcateg = 35;
+
+
+-- -- LigneCommandes2 depuis SITE1
+-- CREATE TABLE LigneCommandes2 AS
+-- SELECT *
+-- FROM LigneCommandes@site1
+-- WHERE quantite > 50
+-- AND idproduit IN (SELECT idproduit FROM Produits2);
+
+
+-- -- Commandes2 depuis SITE1
+-- CREATE TABLE Commandes2 AS
+-- SELECT DISTINCT c.*
+-- FROM Commandes@site1 c
+-- JOIN LigneCommandes2 l
+-- ON c.idcommande = l.idcommande;
+
+
+-- -- Clients2 depuis SITE1
+-- CREATE TABLE Clients2 AS
+-- SELECT DISTINCT cl.*
+-- FROM Clients@site1 cl
+-- JOIN Commandes2 c
+-- ON cl.idclient = c.idclient;
+
+
+
 
 -- CREATE TABLE Produits2 AS
 -- SELECT *

@@ -1,59 +1,144 @@
--- =========================
--- SITE 1 : INSERT DATA TEST
--- =========================
+-- =====================================================
+-- SITE 1 : INSERT / UPDATE / DELETE TEST
+-- =====================================================
 
--- CLIENTS1
-INSERT INTO Clients1 VALUES (1, 'C001', 'Client A');
-INSERT INTO Clients1 VALUES (2, 'C002', 'Client B');
-
--- PRODUITS1
-INSERT INTO Produits1 VALUES (1001, 50, 'Produit X', 500);
-INSERT INTO Produits1 VALUES (1002, 50, 'Produit Y', 300);
-
-
--- COMMANDES1
-INSERT INTO Commandes1 VALUES (101, 1, SYSDATE);
-INSERT INTO Commandes1 VALUES (102, 2, SYSDATE);
-
--- LIGNECOMMANDES1
-INSERT INTO LigneCommandes1 VALUES (1, 101, 1001, 120, 10);
-INSERT INTO LigneCommandes1 VALUES (2, 101, 1002, 150, 5);
-INSERT INTO LigneCommandes1 VALUES (3, 102, 1001, 200, 0);
 
 -- =========================
--- CHECK ALL TABLES
+-- 1. INSERT DATA TEST
 -- =========================
+
+BEGIN
+
+    -- CLIENTS1
+    INSERT INTO Clients1 VALUES (1, 'C001', 'Client A');
+    INSERT INTO Clients1 VALUES (2, 'C002', 'Client B');
+
+    -- PRODUITS1
+    INSERT INTO Produits1 VALUES (1001, 50, 'Produit X', 500);
+    INSERT INTO Produits1 VALUES (1002, 50, 'Produit Y', 300);
+
+    -- COMMANDES1
+    INSERT INTO Commandes1 VALUES (101, 1, SYSDATE);
+    INSERT INTO Commandes1 VALUES (102, 2, SYSDATE);
+
+    -- LIGNECOMMANDES1
+    INSERT INTO LigneCommandes1 VALUES (1, 101, 1001, 120, 10);
+    INSERT INTO LigneCommandes1 VALUES (2, 101, 1002, 150, 5);
+    INSERT INTO LigneCommandes1 VALUES (3, 102, 1001, 200, 0);
+
+    DBMS_OUTPUT.PUT_LINE('Insertion SITE 1 réussie.');
+
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        DBMS_OUTPUT.PUT_LINE('Erreur INSERT SITE1 : ' || SQLERRM);
+
+END;
+/
+COMMIT;
+
+
+-- =========================
+-- 2. CHECK ALL TABLES
+-- =========================
+
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('=== CHECK SITE 1 TABLES ===');
+END;
+/
 
 SELECT * FROM Clients1;
 SELECT * FROM Produits1;
 SELECT * FROM Commandes1;
 SELECT * FROM LigneCommandes1;
 
--- =========================
--- UPDATE TEST
--- =========================
-
-UPDATE Clients1
-SET societe = 'Updated Client A'
-WHERE idclient = 1;
-
-UPDATE Produits1
-SET prixunitaire = 600
-WHERE idproduit = 1001;
-
-UPDATE LigneCommandes1
-SET quantite = 180
-WHERE idlignecommande = 1;
 
 -- =========================
--- DELETE TEST
+-- 3. UPDATE TEST
 -- =========================
 
-DELETE FROM LigneCommandes1
-WHERE idlignecommande = 3;
+BEGIN
 
+    UPDATE Clients1
+    SET societe = 'Updated Client A'
+    WHERE idclient = 1;
+
+    UPDATE Produits1
+    SET prixunitaire = 600
+    WHERE idproduit = 1001;
+
+    UPDATE LigneCommandes1
+    SET quantite = 180
+    WHERE idlignecommande = 1;
+
+    DBMS_OUTPUT.PUT_LINE('UPDATE SITE 1 terminé.');
+
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        DBMS_OUTPUT.PUT_LINE('Erreur UPDATE SITE1 : ' || SQLERRM);
+
+END;
+/
+COMMIT;
+
+
+-- =========================
+-- 4. DELETE TEST (UNE LIGNE)
+-- =========================
+
+BEGIN
+
+    DELETE FROM LigneCommandes1
+    WHERE idlignecommande = 3;
+
+    DBMS_OUTPUT.PUT_LINE('DELETE ligne 3 effectué.');
+
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        DBMS_OUTPUT.PUT_LINE('Erreur DELETE SITE1 : ' || SQLERRM);
+
+END;
+/
+COMMIT;
+
+
+-- =========================
+-- 5. DELETE GLOBAL CLEANUP
+-- =========================
+
+BEGIN
+
+    DELETE FROM LigneCommandes1;
+    DELETE FROM Commandes1;
+    DELETE FROM Produits1;
+    DELETE FROM Clients1;
+
+    COMMIT;
+
+    DBMS_OUTPUT.PUT_LINE('Toutes les données SITE1 supprimées.');
+
+EXCEPTION
+    WHEN OTHERS THEN
+
+        ROLLBACK;
+
+        DBMS_OUTPUT.PUT_LINE('Erreur CLEAN DELETE SITE1 : ' || SQLERRM);
+
+END;
+/
+COMMIT;
+
+
+-- =========================
+-- 6. FINAL CHECK
+-- =========================
+
+SELECT * FROM Clients1;
+SELECT * FROM Produits1;
+SELECT * FROM Commandes1;
 SELECT * FROM LigneCommandes1;
-
 
 -- INSERT INTO LigneCommandes1 VALUES (1, 101, 1001, 120, 10);
 

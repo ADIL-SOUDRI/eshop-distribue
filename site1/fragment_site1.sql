@@ -51,25 +51,31 @@ SELECT table_name FROM user_tables;
 
 -- Affichage des clients du SITE 1
 SELECT * FROM Clients1;
-
-
--- =========================================
--- TEST / RESET (SUPPRESSION DES FRAGMENTS SITE1)
--- =========================================
-
-DROP TABLE LigneCommandes1 CASCADE CONSTRAINTS;
-DROP TABLE Commandes1 CASCADE CONSTRAINTS;
-DROP TABLE Produits1 CASCADE CONSTRAINTS;
-DROP TABLE Clients1 CASCADE CONSTRAINTS;
-
--- Vérification après suppression
-SELECT table_name FROM user_tables;
-
--- Test de lecture des produits du fragment SITE1 (si la table existe)
+-- Affichage des prosuits du SITE 1
 SELECT * FROM Produits1;
-
--- Test de lecture des lignes de commandes du fragment SITE1 (si la table existe)
+-- Affichage des commandes du SITE 1
+SELECT * FROM Commandes1;
+-- Affichage des ligneCommandes du SITE 1
 SELECT * FROM LigneCommandes1;
+
+
+-- -- =========================================
+-- -- TEST / RESET (SUPPRESSION DES FRAGMENTS SITE1)
+-- -- =========================================
+
+-- DROP TABLE LigneCommandes1 CASCADE CONSTRAINTS;
+-- DROP TABLE Commandes1 CASCADE CONSTRAINTS;
+-- DROP TABLE Produits1 CASCADE CONSTRAINTS;
+-- DROP TABLE Clients1 CASCADE CONSTRAINTS;
+
+-- -- Vérification après suppression
+-- SELECT table_name FROM user_tables;
+
+-- -- Test de lecture des produits du fragment SITE1 (si la table existe)
+-- SELECT * FROM Produits1;
+
+-- -- Test de lecture des lignes de commandes du fragment SITE1 (si la table existe)
+-- SELECT * FROM LigneCommandes1;
 
 
 -- -- PRODUITS SITE 1

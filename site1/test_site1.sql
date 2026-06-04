@@ -23,14 +23,11 @@ BEGIN
 
     -- LIGNECOMMANDES1
     INSERT INTO LigneCommandes1 VALUES (1, 101, 1001, 120, 10);
-    INSERT INTO LigneCommandes1 VALUES (2, 101, 1002, 150, 5);
+    INSERT INTO LigneCommandes1 VALUES (27, 1, 1002, 151, 5);
     -- ------------------------------
     -- ajouter pour tester 
     INSERT INTO LigneCommandes1 VALUES (30, 1, 1001, 185, 0);
-    SELECT COUNT(*) FROM Produits1;
-SELECT COUNT(*) FROM Commandes1;
-SELECT COUNT(*) FROM Clients1;
-SELECT COUNT(*) FROM LigneCommandes1;
+
 -- -----------------------
 
     DBMS_OUTPUT.PUT_LINE('Insertion SITE 1 réussie.');
@@ -145,7 +142,10 @@ COMMIT;
 SELECT * FROM Clients1;
 SELECT * FROM Produits1;
 SELECT * FROM Commandes1;
-SELECT * FROM LigneCommandes1;
+
+SELECT * FROM LigneCommandes1
+ORDER BY IDLIGNECOMMANDE ASC;
+
 -- DELETE FROM LigneCommandes1;
 -- DELETE FROM Commandes;
 -- DELETE FROM Produits;

@@ -358,7 +358,14 @@ SELECT owner, table_name
 FROM all_tables
 WHERE table_name = 'CLIENTS';
 
-
+--  créer une vue globale
+CREATE OR REPLACE VIEW V_GLOBAL_LIGNES AS
+SELECT * FROM LigneCommandes1@SITE1_LINK
+UNION ALL
+SELECT * FROM LigneCommandes2@SITE2_LINK;
+-- — tester
+SELECT * FROM V_GLOBAL_LIGNES 
+ORDER BY IDLIGNECOMMANDE ASC;
 
 
 

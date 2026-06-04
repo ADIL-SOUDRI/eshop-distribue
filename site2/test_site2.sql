@@ -25,23 +25,24 @@ INSERT INTO LigneCommandes2 VALUES (5, 202, 2002, 80, 10);
 SELECT * FROM Clients2;
 SELECT * FROM Produits2;
 SELECT * FROM Commandes2;
-SELECT * FROM LigneCommandes2;
+SELECT * FROM LigneCommandes2
+ORDER BY IDLIGNECOMMANDE ASC;
 
 -- =========================
 -- UPDATE TEST
 -- =========================
 
-UPDATE Clients2
-SET societe = 'Updated Client C'
-WHERE idclient = 3;
+-- UPDATE Clients2
+-- SET societe = 'Updated Client C'
+-- WHERE idclient = 3;
 
-UPDATE Produits2
-SET prixunitaire = 500
-WHERE idproduit = 2001;
+-- UPDATE Produits2
+-- SET prixunitaire = 500
+-- WHERE idproduit = 2001;
 
 UPDATE LigneCommandes2
 SET quantite = 90
-WHERE idlignecommande = 4;
+WHERE idlignecommande = 3;
 
 -- =========================
 -- DELETE TEST
@@ -57,7 +58,7 @@ BEGIN
     DELETE FROM Commandes2;
     DELETE FROM Produits2;
     DELETE FROM Clients2;
-
+ROLLBACK;
     COMMIT;
 
     DBMS_OUTPUT.PUT_LINE(
@@ -74,7 +75,8 @@ EXCEPTION
         );
 
 END;
-/
+
+Commit;
 
 -- INSERT INTO LigneCommandes2 VALUES (2, 102, 2001, 60, 5);
 

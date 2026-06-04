@@ -19,6 +19,40 @@ SELECT * FROM Commandes;
 SELECT * FROM LigneCommandes;
 
 COMMIT;
+-- Depuis la base GLOBALE
+SELECT COUNT(*) FROM LigneCommandes1@SITE1_LINK;
+-- Doit retourner le nombre de lignes que vous avez dans SITE1
+
+-- Depuis la base GLOBALE
+-- Vérifier si la vue existe
+SELECT * FROM USER_VIEWS WHERE VIEW_NAME = 'LIGNECOMMANDES_GLOBAL';
+
+-- Test Complet: Depuis la base GLOBALE
+SET SERVEROUTPUT ON;
+
+DECLARE
+    v_count_site1 NUMBER;
+    v_count_global NUMBER;
+BEGIN
+    -- Compter sur SITE1 directement
+    SELECT COUNT(*) INTO v_count_site1 FROM LigneCommandes1@SITE1_LINK;
+    DBMS_OUTPUT.PUT_LINE('Lignes sur SITE1: ' || v_count_site1);
+    
+    -- Compter via la vue globale
+    SELECT COUNT(*) INTO v_count_global FROM LigneCommandes_Global;
+    DBMS_OUTPUT.PUT_LINE('Lignes via vue GLOBALE: ' || v_count_global);
+    
+    IF v_count_site1 = v_count_global THEN
+        DBMS_OUTPUT.PUT_LINE(' OK: La vue globale voit toutes les données SITE1');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE(' PROBLEME: La vue globale ne voit pas toutes les données');
+    END IF;
+END;
+/
+
+-- Depuis GLOBALE
+SELECT 'OK' FROM DUAL@SITE1_LINK;
+-- Si erreur, recréer le lien
 
 
 -- =========================
@@ -132,11 +166,12 @@ BEGIN
     INSERT INTO LigneCommandes VALUES (19, 8, 4001, 90, 1);
     INSERT INTO LigneCommandes VALUES (20, 9, 4002, 85, 0);
 
-    INSERT INTO LigneCommandes VALUES (28, 1, 3001, 121, 5);
-    INSERT INTO LigneCommandes VALUES (23, 12, 2001, 40, 2);
-    INSERT INTO LigneCommandes VALUES (25, 3, 1001, 120, 0);
-    INSERT INTO LigneCommandes VALUES (27, 1, 1001, 120, 5);
-    INSERT INTO LigneCommandes VALUES (29, 1, 1001, 120, 5);
+    INSERT INTO LigneCommandes VALUES (21, 1, 3001, 121, 5);
+    INSERT INTO LigneCommandes VALUES (22, 12, 2001, 40, 2);
+    INSERT INTO LigneCommandes VALUES (23, 12, 2001, 90, 2);
+    INSERT INTO LigneCommandes VALUES (24, 3, 1001, 120, 0);
+    INSERT INTO LigneCommandes VALUES (25, 1, 1001, 120, 5);
+    INSERT INTO LigneCommandes VALUES (26, 1, 1001, 120, 5);
 
     DBMS_OUTPUT.PUT_LINE('Lignes de commandes insérées avec succès.');
 
@@ -175,10 +210,11 @@ BEGIN
     WHERE idlignecommande = 1;
 
     UPDATE LigneCommandes
-    SET idproduit = 1001,
-        quantite = 300,
+    -- SET idproduit = 1001,
+    SET
+        quantite = 30,
         remise = 5
-    WHERE idlignecommande = 2;
+    WHERE idlignecommande = 3;
 
     DBMS_OUTPUT.PUT_LINE('Mise à jour effectuée.');
 
@@ -196,13 +232,14 @@ COMMIT;
 -- 8. DELETE DONNEES
 -- =========================
 
+-- 8.1 SUPPRESSION DE DONNÉES SPÉCIFIQUES
 BEGIN
 
     DELETE FROM LigneCommandes
-    WHERE idlignecommande = 2;
+    WHERE idlignecommande = 26;
 
     DELETE FROM LigneCommandes
-    WHERE idlignecommande = 5;
+    WHERE idlignecommande = 23;
 
     DBMS_OUTPUT.PUT_LINE('Suppressions effectuées.');
 
@@ -214,13 +251,13 @@ EXCEPTION
 END;
 /
 COMMIT;
-
+-- 8.2 SUPPRESSION DE TOUTES LES DONNÉES 
 BEGIN
 
     DELETE FROM LigneCommandes;
-    -- DELETE FROM Commandes;
-    -- DELETE FROM Produits;
-    -- DELETE FROM Clients;
+    DELETE FROM Commandes;
+    DELETE FROM Produits;
+    DELETE FROM Clients;
 
     COMMIT;
 
@@ -243,7 +280,7 @@ END;
 
 
 -- ============================================================================
--- 4. TEST DES CONNEXIONS
+-- 9. TEST DES CONNEXIONS
 -- ============================================================================
 
 DECLARE
@@ -274,6 +311,52 @@ END;
 SELECT 'SITE1 est accessible' AS Test FROM DUAL@SITE1_LINK;
 SELECT 'SITE2 est accessible' AS Test FROM DUAL@SITE2_LINK;
 
+-- =========================
+-- 10. LISTE DES UTILISATEURS
+-- =========================
+
+SELECT username FROM all_users;
+
+-- =========================
+-- 11. LISTE DE TOUTES LES TABLES
+-- =========================
+ 
+SELECT table_name, owner
+FROM all_tables
+ORDER BY owner, table_name;
+
+-- =========================
+-- 12. RECHERCHE DE TABLES SPÉCIFIQUES
+-- =========================
+
+
+SELECT owner, table_name 
+FROM all_tables 
+WHERE table_name IN ('CLIENTS','COMMANDES','PRODUITS');
+
+
+-- =========================
+-- 13. RECHERCHE DE LA TABLE 'clients' (minuscules)
+-- =========================
+
+-- PROMPT === RECHERCHE TABLE : clients (minuscules) ===
+-- SELECT owner
+-- FROM all_tables
+-- WHERE table_name = 'clients';
+
+
+-- =========================
+-- 14. DESCRIPTION DE LA TABLE CLIENTS
+-- =========================
+DESC Clients;
+
+
+-- =========================
+-- 15. RECHERCHE DE LA TABLE 'CLIENTS' (majuscules)
+-- =========================
+SELECT owner, table_name
+FROM all_tables
+WHERE table_name = 'CLIENTS';
 
 
 

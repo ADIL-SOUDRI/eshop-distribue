@@ -65,7 +65,66 @@ BEGIN
 END;
 /
 -- =========================================
+CREATE OR REPLACE PROCEDURE insertligne1(
+    p_idlignecommande NUMBER,
+    p_idcommande NUMBER,
+    p_idproduit NUMBER,
+    p_quantite NUMBER,
+    p_remise NUMBER
+)
+IS
+    v_count NUMBER;
+    v_idclient NUMBER;
+BEGIN
 
+    -- récupérer client depuis SITE GLOBAL
+    SELECT idclient 
+    INTO v_idclient
+    FROM Commandes@site_global
+    WHERE idcommande = p_idcommande;
+
+    -- CLIENTS1
+    SELECT COUNT(*) INTO v_count
+    FROM Clients1
+    WHERE idclient = v_idclient;
+
+    IF v_count = 0 THEN
+        INSERT INTO Clients1
+        SELECT * 
+        FROM Clients@site_global
+        WHERE idclient = v_idclient;
+    END IF;
+
+    -- PRODUITS1
+    SELECT COUNT(*) INTO v_count
+    FROM Produits1
+    WHERE idproduit = p_idproduit;
+
+    IF v_count = 0 THEN
+        INSERT INTO Produits1
+        SELECT *
+        FROM Produits@site_global
+        WHERE idproduit = p_idproduit;
+    END IF;
+
+    -- COMMANDES1
+    SELECT COUNT(*) INTO v_count
+    FROM Commandes1
+    WHERE idcommande = p_idcommande;
+
+    IF v_count = 0 THEN
+        INSERT INTO Commandes1
+        SELECT *
+        FROM Commandes@site_global
+        WHERE idcommande = p_idcommande;
+    END IF;
+
+    -- LIGNE
+    INSERT INTO LigneCommandes1
+    VALUES (p_idlignecommande, p_idcommande, p_idproduit, p_quantite, p_remise);
+
+END;
+/
 
 SELECT object_name FROM user_objects WHERE object_type='PROCEDURE';
 -- =========================================

@@ -24,7 +24,14 @@ BEGIN
     -- LIGNECOMMANDES1
     INSERT INTO LigneCommandes1 VALUES (1, 101, 1001, 120, 10);
     INSERT INTO LigneCommandes1 VALUES (2, 101, 1002, 150, 5);
-    INSERT INTO LigneCommandes1 VALUES (3, 102, 1001, 200, 0);
+    -- ------------------------------
+    -- ajouter pour tester 
+    INSERT INTO LigneCommandes1 VALUES (30, 1, 1001, 185, 0);
+    SELECT COUNT(*) FROM Produits1;
+SELECT COUNT(*) FROM Commandes1;
+SELECT COUNT(*) FROM Clients1;
+SELECT COUNT(*) FROM LigneCommandes1;
+-- -----------------------
 
     DBMS_OUTPUT.PUT_LINE('Insertion SITE 1 réussie.');
 
@@ -59,16 +66,16 @@ SELECT * FROM LigneCommandes1;
 
 BEGIN
 
-    UPDATE Clients1
-    SET societe = 'Updated Client A'
-    WHERE idclient = 1;
+    -- UPDATE Clients1
+    -- SET societe = 'Updated Client A'
+    -- WHERE idclient = 1;
 
-    UPDATE Produits1
-    SET prixunitaire = 600
-    WHERE idproduit = 1001;
+    -- UPDATE Produits1
+    -- SET prixunitaire = 600
+    -- WHERE idproduit = 1001;
 
     UPDATE LigneCommandes1
-    SET quantite = 180
+    SET quantite = 190
     WHERE idlignecommande = 1;
 
     DBMS_OUTPUT.PUT_LINE('UPDATE SITE 1 terminé.');
@@ -139,6 +146,47 @@ SELECT * FROM Clients1;
 SELECT * FROM Produits1;
 SELECT * FROM Commandes1;
 SELECT * FROM LigneCommandes1;
+-- DELETE FROM LigneCommandes1;
+-- DELETE FROM Commandes;
+-- DELETE FROM Produits;
+-- DELETE FROM Clients;
+
+SELECT COUNT(*) FROM clients1;
+SELECT COUNT(*) FROM produits1;
+SELECT COUNT(*) FROM commandes1;
+SELECT COUNT(*) FROM lignecommandes1;
+
+-- =========================
+-- trigger_site1_to_global
+-- =========================
+CREATE OR REPLACE TRIGGER TRG_SITE1_UPDATE_GLOBAL
+AFTER UPDATE ON LigneCommandes1
+FOR EACH ROW
+BEGIN
+
+   UPDATE LigneCommandes@SITE_GLOBAL
+   SET idproduit = :NEW.idproduit,
+       quantite = :NEW.quantite,
+       remise = :NEW.remise
+   WHERE idlignecommande = :OLD.idlignecommande;
+
+END;
+/
+
+SELECT db_link
+FROM user_db_links;
+
+SELECT trigger_name
+FROM user_triggers;
+
+UPDATE LigneCommandes1
+SET quantite = 190
+WHERE idlignecommande = 1;
+
+DROP TRIGGER TRG_SITE1_UPDATE_GLOBAL;
+
+COMMIT;
+
 
 -- INSERT INTO LigneCommandes1 VALUES (1, 101, 1001, 120, 10);
 

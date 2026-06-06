@@ -146,10 +146,11 @@ SELECT * FROM Commandes1;
 SELECT * FROM LigneCommandes1
 ORDER BY IDLIGNECOMMANDE ASC;
 
--- DELETE FROM LigneCommandes1;
--- DELETE FROM Commandes;
--- DELETE FROM Produits;
--- DELETE FROM Clients;
+DELETE FROM LigneCommandes1;
+DELETE FROM Commandes1;
+DELETE FROM Produits1;
+DELETE FROM Clients1;
+Commit;
 
 SELECT COUNT(*) FROM clients1;
 SELECT COUNT(*) FROM produits1;

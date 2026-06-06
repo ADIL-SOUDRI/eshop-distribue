@@ -28,6 +28,17 @@ SELECT * FROM Commandes2;
 SELECT * FROM LigneCommandes2
 ORDER BY IDLIGNECOMMANDE ASC;
 
+DELETE FROM LigneCommandes2;
+DELETE FROM Commandes2;
+DELETE FROM Produits2;
+DELETE FROM Clients2;
+COMMIT;
+
+UPDATE LigneCommandes2
+SET quantite = 31
+WHERE idlignecommande = 2;
+
+COMMIT;
 -- =========================
 -- UPDATE TEST
 -- =========================

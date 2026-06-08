@@ -26,4 +26,4 @@ WHERE EXTRACT(YEAR FROM cmd.datecommande) = 2026
 GROUP BY c.idclient, c.codeclient;
 
 SELECT * FROM LigneCommandes1@SITE1_LINK;
-SELECT * FROM LigneCommandes1@SITE1_LINK;
+SELECT * FROM LigneCommandes2@SITE2_LINK;

@@ -22,7 +22,7 @@ BEGIN
          :NEW.remise
       );
 
-   ELSIF v_cat = 35 AND :NEW.quantite < 100 THEN
+   ELSIF v_cat = 35 AND  :NEW.quantite < 100 AND :NEW.quantite >50 THEN
 
       INSERTLIGNE2@SITE2_LINK(
          :NEW.idlignecommande,

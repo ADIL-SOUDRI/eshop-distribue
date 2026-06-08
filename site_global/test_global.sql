@@ -154,12 +154,17 @@ WHERE table_name = 'CLIENTS';
 
 
 
+SELECT username FROM all_users;
 
+-- ========================================================
+-- CREATION ET CONFIGURATION DE L'UTILISATEUR GLOBAL
+-- ========================================================
+CREATE USER global_user IDENTIFIED BY global123;
+GRANT CONNECT, RESOURCE TO global_user;
 
-
-
-
-
+-- Vérification de la présence de l'utilisateur dans la base de données
+SELECT username
+FROM all_users;
 
 
 

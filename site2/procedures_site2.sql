@@ -1,15 +1,11 @@
 -- =========================================
 --  PROCÉDURES SITE 2
--- Table : LigneCommandes2
--- Objectif : INSERT / DELETE / UPDATE
-
 -- =========================================
 
 
 
 -- =========================================
 --  INSERTION
--- Ajoute une ligne dans LigneCommandes2
 -- =========================================
 
 CREATE OR REPLACE PROCEDURE insertligne2(
@@ -101,14 +97,13 @@ END;
 --     INSERT INTO LigneCommandes2
 --     VALUES (p_idlignecommande, p_idcommande, p_idproduit, p_quantite, p_remise);
 -- END;
--- /
+/
 -- =========================================
 
 
 
 -- =========================================
 --  SUPPRESSION
--- Supprime une ligne selon ID
 -- =========================================
 CREATE OR REPLACE PROCEDURE deleteligne2(
     p_idlignecommande NUMBER
@@ -157,7 +152,6 @@ END;
 
 -- =========================================
 --  MODIFICATION
--- Met à jour une ligne existante
 -- =========================================
 CREATE OR REPLACE PROCEDURE updateligne2(
     p_idlignecommande NUMBER,
@@ -288,6 +282,11 @@ WHERE quantite >=100;
 --  Résultat attendu : VIDE
 -- =========================================
 
+--     INSERT INTO Clients2 VALUES (1, 'CLI001', 'Société Atlas');
+--     INSERT INTO Produits2 VALUES (1001, 50, 'Serveur Dell PowerEdge', 20000);
+--     INSERT INTO Commandes2 VALUES (1, 1, TO_DATE('2026-01-10','YYYY-MM-DD'));
+
+-- COMMIT;
 -- CREATE OR REPLACE PROCEDURE insertligne2(
 --     p_idlignecommande NUMBER,
 --     p_idcommande NUMBER,

@@ -1,9 +1,5 @@
 /* =========================================================
    INDEXES - OPTIMISATION BASE ESHOP DISTRIBUEE
-   Objectif :
-   - Accélérer les jointures
-   - Optimiser les filtres WHERE
-   - Améliorer les requêtes analytiques (2026)
 ========================================================= */
 
 /* =========================================
@@ -47,9 +43,51 @@ ON LigneCommandes(idcommande, idproduit);
 CREATE INDEX idx_lc_quantite_remise
 ON LigneCommandes(quantite, remise);
 
-/* =========================================
-   INDEX CLIENT CODE
-   Rôle : recherche rapide client
-========================================= */
-CREATE INDEX idx_client_code
-ON Clients(codeclient);
+
+
+
+
+SELECT index_name, table_name
+FROM user_indexes
+ORDER BY table_name;
+
+DROP INDEX idx_produit_categ;
+
+SELECT *
+FROM Produits
+WHERE idcateg = 50;
+
+EXPLAIN PLAN FOR
+SELECT *
+FROM Produits
+WHERE idcateg = 50;
+
+SELECT *
+FROM TABLE(DBMS_XPLAN.DISPLAY);
+
+DROP INDEX idx_produit_categ;
+EXPLAIN PLAN FOR
+SELECT *
+FROM Produits
+WHERE idcateg = 50;
+SELECT *
+FROM TABLE(DBMS_XPLAN.DISPLAY);
+
+EXPLAIN PLAN FOR
+SELECT c.idcommande,
+       lc.idproduit
+FROM Commandes c
+JOIN LigneCommandes lc
+ON c.idcommande = lc.idcommande;
+SELECT *
+FROM TABLE(DBMS_XPLAN.DISPLAY);
+SELECT index_name,
+       table_name,
+       status
+FROM user_indexes;
+
+SELECT index_name
+FROM user_indexes
+WHERE table_name='PRODUITS';
+SELECT COUNT(*)
+FROM Produits;

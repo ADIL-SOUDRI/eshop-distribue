@@ -22,8 +22,9 @@ BEGIN
     INSERT INTO Commandes1 VALUES (102, 2, SYSDATE);
 
     -- LIGNECOMMANDES1
-    INSERT INTO LigneCommandes1 VALUES (1, 101, 1001, 120, 10);
-    INSERT INTO LigneCommandes1 VALUES (27, 1, 1002, 151, 5);
+    INSERT INTO LigneCommandes1 VALUES (7, 10, 1001, 120, 10);
+    INSERT INTO LigneCommandes1 VALUES (8, 111, 1001, 151, 5);
+    COMMIT;
     -- ------------------------------
     -- ajouter pour tester 
     INSERT INTO LigneCommandes1 VALUES (30, 1, 1001, 185, 0);
@@ -53,9 +54,10 @@ END;
 
 SELECT * FROM Clients1;
 SELECT * FROM Produits1;
-SELECT * FROM Commandes1;
-SELECT * FROM LigneCommandes1;
-
+SELECT * FROM Commandes1 ORDER BY IDCOMMANDE ASC;
+SELECT * FROM LigneCommandes1
+ORDER BY IDLIGNECOMMANDE ASC;
+INSERT INTO LigneCommandes1 VALUES (1, 1, 1001, 120, 5);
 
 -- =========================
 -- 3. UPDATE TEST
@@ -73,7 +75,7 @@ BEGIN
 
     UPDATE LigneCommandes1
     SET quantite = 190
-    WHERE idlignecommande = 1;
+    WHERE idlignecommande = 7;
 
     DBMS_OUTPUT.PUT_LINE('UPDATE SITE 1 terminé.');
 
@@ -94,7 +96,7 @@ COMMIT;
 BEGIN
 
     DELETE FROM LigneCommandes1
-    WHERE idlignecommande = 3;
+    WHERE idlignecommande = 8;
 
     DBMS_OUTPUT.PUT_LINE('DELETE ligne 3 effectué.');
 
@@ -145,6 +147,9 @@ SELECT * FROM Commandes1;
 
 SELECT * FROM LigneCommandes1
 ORDER BY IDLIGNECOMMANDE ASC;
+SELECT * FROM LigneCommandes1 where IDLIGNECOMMANDE=1;
+SELECT * FROM LigneCommandes1 where IDLIGNECOMMANDE=26;
+
 
 DELETE FROM LigneCommandes1;
 DELETE FROM Commandes1;
@@ -187,6 +192,20 @@ WHERE idlignecommande = 1;
 DROP TRIGGER TRG_SITE1_UPDATE_GLOBAL;
 
 COMMIT;
+
+
+SELECT username FROM all_users;
+
+-- ========================================================
+-- CREATION ET CONFIGURATION DE L'UTILISATEUR (SITE 1)
+-- ========================================================
+
+CREATE USER site1_user IDENTIFIED BY site123;
+GRANT CONNECT, RESOURCE TO site1_user;
+
+-- Vérification de la présence de l'utilisateur dans la base de données
+SELECT username
+FROM all_users;
 
 
 -- INSERT INTO LigneCommandes1 VALUES (1, 101, 1001, 120, 10);

@@ -2,7 +2,12 @@
    TEST DES TRIGGERS - ESHOP DISTRIBUÉ
    Objectif : tester INSERT / UPDATE / DELETE + distribution
    ========================================================= */
--- desativer tous les triggers d'abord
+-- desativer tous les triggers SN2 
+
+ALTER TRIGGER  SYC_INSERT_LIGNE_SC2 DISABLE;
+ALTER TRIGGER SYC_UPDATE_LIGNE_SC2 DISABLE;
+ALTER TRIGGER SYC_DELETE_LIGNE_SC2 DISABLE;
+-- desativer tous les triggers
 
 ALTER TRIGGER  SYC_INSERT_LIGNE DISABLE;
 ALTER TRIGGER SYC_UPDATE_LIGNE DISABLE;
@@ -20,7 +25,7 @@ ALTER TRIGGER SYC_DELETE_LIGNE ENABLE;
 SELECT * FROM Clients;
 SELECT * FROM Produits;
 SELECT * FROM Commandes;
-SELECT * FROM LigneCommandes;
+SELECT * FROM LigneCommandes ORDER BY IDLIGNECOMMANDE ASC;
 -- =========================
 -- 2. INSERTION CLIENTS
 -- =========================
@@ -108,18 +113,18 @@ BEGIN
 
     INSERT INTO LigneCommandes VALUES (1, 1, 1001, 120, 5);
     INSERT INTO LigneCommandes VALUES (2, 2, 1002, 150, 10);
-    INSERT INTO LigneCommandes VALUES (3, 3, 2001, 20, 0);
-    INSERT INTO LigneCommandes VALUES (4, 4, 2002, 50, 2);
-    INSERT INTO LigneCommandes VALUES (5, 1, 2003, 30, 3);
+    INSERT INTO LigneCommandes VALUES (3, 3, 2001, 70, 0);
+    INSERT INTO LigneCommandes VALUES (4, 4, 2002, 60, 2);
+    INSERT INTO LigneCommandes VALUES (5, 1, 2003, 70, 3);
 
     INSERT INTO LigneCommandes VALUES (6, 5, 3001, 200, 10);
     INSERT INTO LigneCommandes VALUES (7, 6, 3002, 120, 5);
-    INSERT INTO LigneCommandes VALUES (8, 7, 4001, 25, 0);
-    INSERT INTO LigneCommandes VALUES (9, 8, 4002, 40, 3);
-    INSERT INTO LigneCommandes VALUES (10, 9, 4003, 60, 2);
+    INSERT INTO LigneCommandes VALUES (8, 7, 4001, 65, 0);
+    INSERT INTO LigneCommandes VALUES (9, 8, 4002, 60, 3);
+    INSERT INTO LigneCommandes VALUES (10, 8, 4003, 60, 2);
 
     INSERT INTO LigneCommandes VALUES (11, 1, 1001, 150, 2);
-    INSERT INTO LigneCommandes VALUES (12, 2, 1002, 100, 5);
+    INSERT INTO LigneCommandes VALUES (12, 2, 1002, 101, 5);
     INSERT INTO LigneCommandes VALUES (13, 3, 3001, 150, 8);
     INSERT INTO LigneCommandes VALUES (14, 4, 3002, 154, 3);
     INSERT INTO LigneCommandes VALUES (15, 1, 3001, 145, 4);
@@ -128,11 +133,11 @@ BEGIN
     INSERT INTO LigneCommandes VALUES (17, 6, 2002, 70, 0);
     INSERT INTO LigneCommandes VALUES (18, 7, 2003, 80, 2);
     INSERT INTO LigneCommandes VALUES (19, 8, 4001, 90, 1);
-    INSERT INTO LigneCommandes VALUES (20, 9, 4002, 85, 0);
+    INSERT INTO LigneCommandes VALUES (20, 2, 4002, 85, 0);
 
     INSERT INTO LigneCommandes VALUES (21, 1, 3001, 121, 5);
-    INSERT INTO LigneCommandes VALUES (22, 12, 2001, 40, 2);
-    INSERT INTO LigneCommandes VALUES (23, 12, 2001, 90, 2);
+    INSERT INTO LigneCommandes VALUES (22, 5, 2001, 90, 2);
+    INSERT INTO LigneCommandes VALUES (23, 1, 2001, 90, 2);
     INSERT INTO LigneCommandes VALUES (24, 3, 1001, 120, 0);
     INSERT INTO LigneCommandes VALUES (25, 1, 1001, 120, 5);
     INSERT INTO LigneCommandes VALUES (26, 1, 1001, 120, 5);
@@ -155,14 +160,14 @@ COMMIT;
 BEGIN
 
     UPDATE LigneCommandes
-    SET quantite = 200,
+    SET quantite = 130,
         remise = 15
     WHERE idlignecommande = 1;
 
     UPDATE LigneCommandes
     -- SET idproduit = 1001,
     SET
-        quantite = 30,
+        quantite = 80,
         remise = 5
     WHERE idlignecommande = 3;
 
@@ -176,6 +181,9 @@ EXCEPTION
 END;
 /
 COMMIT;
+SELECT * FROM LigneCommandes where IDLIGNECOMMANDE=1;
+SELECT * FROM LigneCommandes where IDLIGNECOMMANDE=3;
+
 
 -- =========================
 -- 7. DELETE DONNEES
@@ -200,6 +208,8 @@ EXCEPTION
 END;
 /
 COMMIT;
+SELECT * FROM LigneCommandes where IDLIGNECOMMANDE=26;
+SELECT * FROM LigneCommandes where IDLIGNECOMMANDE=23;
 -- 8.2 SUPPRESSION DE TOUTES LES DONNÉES 
 BEGIN
 

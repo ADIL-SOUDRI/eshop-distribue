@@ -3,7 +3,7 @@
    ========================================= */
 
 -- Lien vers GLOBALE
-PROMPT 'Creation SITE_GLOBAL vers eshop_global_db...'
+
 CREATE DATABASE LINK SITE_GLOBAL
     CONNECT TO system IDENTIFIED BY oracle
     USING '(DESCRIPTION=
@@ -12,7 +12,7 @@ CREATE DATABASE LINK SITE_GLOBAL
     )';
 
 -- Lien vers SITE1
-PROMPT 'Creation SITE1 vers eshop_site1_db...'
+
 CREATE DATABASE LINK SITE1
     CONNECT TO system IDENTIFIED BY oracle
     USING '(DESCRIPTION=
@@ -20,7 +20,25 @@ CREATE DATABASE LINK SITE1
         (CONNECT_DATA=(SERVICE_NAME=XEPDB1))
     )';
 
+--Vérification des Database Links
+SELECT DB_LINK, USERNAME, HOST, CREATED
+FROM   DBA_DB_LINKS
+ORDER BY DB_LINK;
 
+-- Sessions actives sur chaque instance
+SELECT SID, SERIAL#, STATUS, MACHINE, PROGRAM, SQL_ID
+FROM   V$SESSION
+WHERE  STATUS = 'ACTIVE'
+ORDER BY LAST_CALL_ET ASC;
+
+-- Sessions actives sur chaque instance
+SELECT SID,
+       SERIAL#,
+       STATUS,
+       MACHINE,
+       PROGRAM
+FROM V$SESSION
+WHERE STATUS = 'ACTIVE';
 
 
 

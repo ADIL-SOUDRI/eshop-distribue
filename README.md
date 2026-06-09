@@ -49,9 +49,9 @@ docker ps
 
 | Instance        | Host      | Port | Service Name | Username              | Password |
 |-----------------|-----------|------|--------------|-----------------------|----------|
-| eshop_global    | localhost | 1527 | XE           | system (ou sys as sysdba) | oracle   |
-| eshop_site1     | localhost | 1528 | XE           | system (ou sys as sysdba) | oracle   |
-| eshop_site2     | localhost | 1529 | XE           | system (ou sys as sysdba) | oracle   |
+| eshop_global    | localhost | 1527 | XEPDP1       | system (ou sys as sysdba) | oracle   |
+| eshop_site1     | localhost | 1528 | XEPDP1       | system (ou sys as sysdba) | oracle   |
+| eshop_site2     | localhost | 1529 | XEPDP1       | system (ou sys as sysdba) | oracle   |
 
 ---
 

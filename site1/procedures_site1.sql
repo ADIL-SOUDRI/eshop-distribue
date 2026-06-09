@@ -9,7 +9,6 @@
 
 -- =========================================
 --  INSERTION
--- Ajoute une ligne dans LigneCommandes1
 -- =========================================
 CREATE OR REPLACE PROCEDURE insertligne1(
     p_idlignecommande NUMBER,
@@ -119,7 +118,6 @@ END;
 
 -- =========================================
 -- SUPPRESSION
--- Supprime une ligne selon ID
 -- =========================================
 CREATE OR REPLACE PROCEDURE deleteligne1(
     p_idlignecommande NUMBER
@@ -178,7 +176,6 @@ END;
 
 -- =========================================
 -- MODIFICATION
--- Met à jour une ligne existante
 -- =========================================
 CREATE OR REPLACE PROCEDURE updateligne1(
     p_idlignecommande NUMBER,
@@ -264,6 +261,7 @@ EXCEPTION
 END;
 /
 
+SELECT object_name FROM user_objects WHERE object_type='PROCEDURE';
 
 -- CREATE OR REPLACE PROCEDURE updateligne1(
 --     p_idlignecommande NUMBER,

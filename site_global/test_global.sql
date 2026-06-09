@@ -133,7 +133,7 @@ WHERE table_name IN ('CLIENTS','COMMANDES','PRODUITS');
 -- 13. RECHERCHE DE LA TABLE 'clients' (minuscules)
 -- =========================
 
--- PROMPT === RECHERCHE TABLE : clients (minuscules) ===
+-- PROMPT === RECHERCHE TA'ANONYMOUS'BLE : clients (minuscules) ===
 -- SELECT owner
 -- FROM all_tables
 -- WHERE table_name = 'clients';
@@ -167,7 +167,30 @@ SELECT username
 FROM all_users;
 
 
+SELECT INSTANCE_NAME, STATUS, DATABASE_STATUS
+FROM   V$INSTANCE;
 
+--Vérification des Database Links
+SELECT DB_LINK, USERNAME, HOST, CREATED
+FROM   DBA_DB_LINKS
+ORDER BY DB_LINK;
+
+
+-- Sessions actives sur chaque instance
+SELECT SID, SERIAL#, STATUS, MACHINE, PROGRAM, SQL_ID
+FROM   V$SESSION
+WHERE  STATUS = 'ACTIVE'
+ORDER BY LAST_CALL_ET ASC;
+-- Vérification de l'État des Index
+SELECT INDEX_NAME,
+       STATUS
+FROM USER_INDEXES 
+WHERE index_name LIKE 'IDX%'
+ORDER BY INDEX_NAME;
+-- Reconstruction des Index (Maintenance
+ALTER INDEX idx_lc_client REBUILD;
+
+ALTER INDEX idx_lc_cmd_prod REBUILD;
 
 -- -- =========================
 -- -- TEST GLOBAL DATABASE

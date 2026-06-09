@@ -42,7 +42,6 @@ END;
 /
 COMMIT;
 
-
 -- =========================
 -- 2. CHECK ALL TABLES
 -- =========================
@@ -194,7 +193,7 @@ DROP TRIGGER TRG_SITE1_UPDATE_GLOBAL;
 COMMIT;
 
 
-SELECT username FROM all_users;
+SELECT table_name FROM user_tables ORDER BY table_name;
 
 -- ========================================================
 -- CREATION ET CONFIGURATION DE L'UTILISATEUR (SITE 1)

@@ -48,6 +48,22 @@ END;
 /
 COMMIT;
 
+   INSERT INTO Clients VALUES (5, 'CLI005', 'Société Sigma');
+    INSERT INTO Clients VALUES (6, 'CLI006', 'Société Orion');
+    INSERT INTO Clients VALUES (7, 'CLI007', 'Société Vega');
+    INSERT INTO Clients VALUES (8, 'CLI008', 'Société Nexus');
+    INSERT INTO Clients VALUES (9, 'CLI009', 'Société Titan');
+    INSERT INTO Clients VALUES (10, 'CLI010', 'Société Phoenix');
+    INSERT INTO Clients VALUES (11, 'CLI011', 'Société Horizon');
+    INSERT INTO Clients VALUES (12, 'CLI012', 'Société Quantum');
+    INSERT INTO Clients VALUES (13, 'CLI013', 'Société Alpha');
+    INSERT INTO Clients VALUES (14, 'CLI014', 'Société Beta');
+    INSERT INTO Clients VALUES (15, 'CLI015', 'Société Gamma');
+    INSERT INTO Clients VALUES (16, 'CLI016', 'Société SigmaPlus');
+    INSERT INTO Clients VALUES (17, 'CLI017', 'Société Cloud');
+    INSERT INTO Clients VALUES (18, 'CLI018', 'Société Matrix');
+    INSERT INTO Clients VALUES (19, 'CLI019', 'Société NexusPro');
+    INSERT INTO Clients VALUES (20, 'CLI020', 'Société Infinity');
 
 -- =========================
 -- 3. INSERTION PRODUITS

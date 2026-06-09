@@ -1,6 +1,5 @@
 -- =========================================
 -- CHIFFRE D'AFFAIRES PAR CATEGORIE (2026)
--- DISTRIBUE SITE1 + SITE2
 -- =========================================
 SELECT idcateg,
        SUM(ca_total) AS ca_total

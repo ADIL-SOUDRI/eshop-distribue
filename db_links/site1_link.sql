@@ -5,7 +5,6 @@
 
 
 -- Lien vers GLOBALE
-PROMPT 'Creation SITE_GLOBAL vers eshop_global_db...'
 CREATE DATABASE LINK SITE_GLOBAL
     CONNECT TO system IDENTIFIED BY oracle
     USING '(DESCRIPTION=
@@ -13,7 +12,6 @@ CREATE DATABASE LINK SITE_GLOBAL
         (CONNECT_DATA=(SERVICE_NAME=XEPDB1))
     )';
 
--- Lien vers SITE2
 PROMPT 'Creation SITE2 vers eshop_site2_db...'
 CREATE DATABASE LINK SITE2
     CONNECT TO system IDENTIFIED BY oracle
@@ -21,6 +19,18 @@ CREATE DATABASE LINK SITE2
         (ADDRESS=(PROTOCOL=TCP)(HOST=eshop_site2_db)(PORT=1521))
         (CONNECT_DATA=(SERVICE_NAME=XEPDB1))
     )';
+
+--Vérification des Database Links
+SELECT DB_LINK, USERNAME, HOST, CREATED
+FROM   DBA_DB_LINKS
+ORDER BY DB_LINK;
+
+
+-- Sessions actives sur chaque instance
+SELECT SID, SERIAL#, STATUS, MACHINE, PROGRAM, SQL_ID
+FROM   V$SESSION
+WHERE  STATUS = 'ACTIVE'
+ORDER BY LAST_CALL_ET ASC;
 
 -- ============================================================================
 -- FICHIER: recreate_links_site1.sql

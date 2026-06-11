@@ -152,3 +152,40 @@ EXCEPTION
         DBMS_OUTPUT.PUT_LINE(' [ERREUR] ' || SQLERRM);
 END;
 /
+
+
+
+-- TEST INSERT
+BEGIN
+    insertligne1_scenario2(5, 11, 1001, 160, 5);
+END;
+/
+COMMIT;
+-- Vérification INSERT
+SELECT * FROM LigneCommandes1
+WHERE idlignecommande = 5;
+
+
+
+-- TEST UPDATE
+BEGIN
+    updateligne1_scenario2(5, 1001, 190, 10);
+END;
+/
+COMMIT;
+
+-- Vérification UPDATE
+SELECT * FROM LigneCommandes1
+WHERE idlignecommande = 5;
+
+
+
+--  TEST DELETE
+BEGIN
+    deleteligne1_scenario2(5);
+END;
+/
+Commit;
+-- Vérification DELETE
+SELECT * FROM LigneCommandes1
+WHERE idlignecommande = 5;

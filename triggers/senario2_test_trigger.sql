@@ -48,7 +48,8 @@ COMMIT;
 
 -- Test de mise à jour 2 : Augmentation de la quantité sur la ligne 2
 UPDATE LigneCommandes
-SET quantite = 50
+SET 
+quantite = 10
 WHERE idlignecommande = 2;
 
 COMMIT;

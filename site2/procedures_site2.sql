@@ -35,7 +35,7 @@ BEGIN
     END IF;
 
     --  CONTRÔLE QUANTITÉ SITE2
-    IF p_quantite >= 100 THEN
+    IF p_quantite > 100 OR p_quantite <50 THEN
         RAISE_APPLICATION_ERROR(-20032,
         'Erreur: Quantité invalide (' || p_quantite || ') doit être < 100');
     END IF;
@@ -234,7 +234,7 @@ END;
 
 --  TEST INSERT
 BEGIN
-    insertligne2(30,1, 2001, 10, 5);
+    insertligne2(30,1, 2001, 60, 5);
 END;
 /
 COMMIt;
@@ -247,7 +247,7 @@ WHERE idlignecommande = 30;
 
 --  TEST UPDATE
 BEGIN
-    updateligne2(30, 2002, 10, 10);
+    updateligne2(30, 2002, 70, 10);
 END;
 /
 COMMIt;

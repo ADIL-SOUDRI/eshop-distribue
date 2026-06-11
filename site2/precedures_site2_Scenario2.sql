@@ -152,3 +152,43 @@ EXCEPTION
         DBMS_OUTPUT.PUT_LINE(' [ERREUR] ' || SQLERRM);
 END;
 /
+
+-- =========================================
+-- TESTS INTERNES DU FICHIER
+-- À exécuter après création des procédures
+-- =========================================
+
+-- TEST INSERT
+BEGIN
+    insertligne2_scenario2(6, 11, 1002, 80, 5);
+END;
+/
+COMMIT;
+-- Vérification INSERT
+SELECT * FROM LigneCommandes2
+WHERE idlignecommande = 6;
+
+
+
+-- TEST UPDATE
+BEGIN
+    updateligne2_scenario2(6, 1002, 85, 10);
+END;
+/
+COMMIT;
+
+-- Vérification UPDATE
+SELECT * FROM LigneCommandes2
+WHERE idlignecommande = 6;
+
+
+
+--  TEST DELETE
+BEGIN
+    deleteligne2_scenario2(6);
+END;
+/
+Commit;
+-- Vérification DELETE
+SELECT * FROM LigneCommandes2
+WHERE idlignecommande = 6;

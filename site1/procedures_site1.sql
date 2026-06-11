@@ -40,7 +40,7 @@ BEGIN
     END IF;
 
     -- CONTRÔLE SITE1 : Quantité
-    IF p_quantite <= 100 THEN
+    IF p_quantite < 100 THEN
         RAISE_APPLICATION_ERROR(-20002, 'Erreur: Quantité invalide (' || p_quantite || '), doit être > 100');
     END IF;
 
@@ -289,7 +289,7 @@ SELECT object_name FROM user_objects WHERE object_type='PROCEDURE';
 
 -- TEST INSERT
 BEGIN
-    insertligne1(28, 155, 1001, 156, 5);
+    insertligne1(28, 1, 1001, 156, 5);
 END;
 /
 COMMIT;

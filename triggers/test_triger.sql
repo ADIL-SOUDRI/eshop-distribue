@@ -176,14 +176,15 @@ COMMIT;
 BEGIN
 
     UPDATE LigneCommandes
-    SET quantite = 130,
+    SET idproduit = 2001,
+     quantite = 90,
         remise = 15
     WHERE idlignecommande = 1;
 
     UPDATE LigneCommandes
-    -- SET idproduit = 1001,
-    SET
-        quantite = 80,
+     SET idproduit = 1001,
+    
+        quantite =160,
         remise = 5
     WHERE idlignecommande = 3;
 
@@ -209,10 +210,10 @@ SELECT * FROM LigneCommandes where IDLIGNECOMMANDE=3;
 BEGIN
 
     DELETE FROM LigneCommandes
-    WHERE idlignecommande = 26;
+    WHERE idlignecommande = 1;
 
     DELETE FROM LigneCommandes
-    WHERE idlignecommande = 23;
+    WHERE idlignecommande = 3;
 
     DBMS_OUTPUT.PUT_LINE('Suppressions effectuées.');
 
@@ -259,8 +260,7 @@ SELECT * FROM LigneCommandes1@SITE1_LINK
 UNION ALL
 SELECT * FROM LigneCommandes2@SITE2_LINK;
 -- — tester
-SELECT * FROM V_GLOBAL_LIGNES 
-ORDER BY IDLIGNECOMMANDE ASC;
+
 
 
 
